@@ -1,0 +1,292 @@
+/* ----- EDUCATION TIMELINE SECTION ----- */
+#education {
+  background: linear-gradient(120deg, #89c2f2, #f0f4f8);
+}
+
+.timeline {
+  position: relative;
+  margin-top: 2em;
+  max-width: 800px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 25px;
+  top: 0;
+  width: 3px;
+  height: 100%;
+  background-color: #0a1d3d;
+  border-radius: 2px;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 3em;
+  padding-left: 60px;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 10px;
+  width: 20px;
+  height: 20px;
+  background: #0a1d3d;
+  border: 3px solid #f0f4f8;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.timeline-content {
+  background: #ffffffaa;
+  padding: 1.5em;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.timeline-content:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+.timeline-content h2 {
+  font-size: 1.2em;
+  color: #0a1d3d;
+  margin-bottom: 0.5em;
+}
+
+.timeline-content p {
+  font-size: 1em;
+  color: #0a1d3d;
+  line-height: 1.6;
+}
+
+/* ----- CONTACT SECTION (Two-column interactive layout) ----- */
+#contact {
+  background: linear-gradient(120deg, #b6d0ff, #f0f4f8);
+  padding: 4em 2em;
+}
+
+.contact-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 4em;
+  max-width: 1000px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.contact-left {
+  flex: 1;
+  min-width: 300px;
+}
+
+.contact-left h2 {
+  font-size: 1.6em;
+  color: #0a1d3d;
+  margin-bottom: 1em;
+}
+
+.contact-left p {
+  font-size: 1em;
+  color: #0a1d3d;
+  line-height: 1.6;
+}
+
+.contact-right {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+
+.contact-box {
+  background: #ffffffaa;
+  border-left: 5px solid #0a1d3d;
+  border-radius: 12px;
+  padding: 1em 1.5em;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.contact-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+.contact-box h3 {
+  color: #0a1d3d;
+  font-size: 1.1em;
+  margin-bottom: 0.3em;
+}
+
+.contact-box p {
+  color: #0a1d3d;
+  font-size: 1em;
+}
+
+.contact-box a {
+  color: #0a1d3d;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.contact-box a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+  .contact-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+/* #welcome h1,
+#welcome h3,
+#welcome p {
+  text-align: left;
+}
+#welcome {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #b9d9f5, #d6e8fb);
+  padding: 80px 10%;
+} */
+
+/* Move the Welcome image to the right side */
+/* .section-img {
+  position: absolute;
+  right: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 380px; Adjust this number to resize */
+  /* height: auto;
+  border-radius: 15px;
+  object-fit: cover;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+  z-index: 1;
+} */
+/* ----- WELCOME SECTION LAYOUT FIX ----- */
+#welcome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8em 12%;
+  background: linear-gradient(120deg, #89c2f2, #f0f4f8);
+  position: relative;
+  min-height: 100vh;
+}
+
+.welcome-content {
+  flex: 1;
+  max-width: 55%;
+  text-align: left;
+}
+
+.welcome-content h1 {
+  font-size: 3.5em;
+  font-weight: bold;
+  color: #0a1d3d;
+  margin-bottom: 0.3em;
+}
+
+.welcome-content h2 {
+  font-size: 1.6em;
+  margin-bottom: 1em;
+  color: #0a1d3d;
+}
+
+.welcome-content h3 {
+  font-size: 1.3em;
+  margin-bottom: 0.8em;
+  color: #0a1d3d;
+}
+
+/* About box wider & cleaner */
+.about-box {
+  background: #ffffffcc;
+  border-radius: 15px;
+  padding: 1.5em 2em;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  line-height: 1.6;
+  max-width: 95%;
+}
+
+/* Right-side static image */
+.welcome-img {
+  width: 320px;
+  height: auto;
+  border-radius: 15px;
+  object-fit: cover;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  position: absolute;
+  right: 10%;
+  bottom: 8%;
+}
+
+/* Responsive adjustment for smaller screens */
+@media (max-width: 1024px) {
+  #welcome {
+    flex-direction: column;
+    text-align: center;
+    padding: 6em 2em;
+  }
+
+  .welcome-content {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .welcome-img {
+    position: static;
+    margin-top: 2em;
+    width: 70%;
+  }
+}
+
+
+/* Container for each project card */
+.project-card {
+    position: relative;
+    width: 250px; /* adjust width as needed */
+    height: 200px; /* adjust height as needed */
+    margin: 20px;
+    padding: 20px;
+    background-color: #ffffffdd;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    overflow: hidden; /* keeps images inside card */
+}
+
+/* Project image */
+.project-card img {
+    position: absolute;
+    top: 50%;
+    right: 20px; /* consistent right-side placement */
+    transform: translateY(-50%);
+    width: 120px; /* consistent image width */
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* Card text */
+.project-card .card-text {
+    max-width: 150px; /* leaves space for image */
+    color: #1c2a54;
+    font-family: 'Georgia', serif;
+}

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brunda C S Portfolio</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* ----- GENERAL STYLES ----- */
+* {margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth;}
+body {font-family:'Times New Roman', serif; background:#f0f4f8; color:#0a1d3d; overflow-x:hidden;}
+a {text-decoration:none; color:inherit;}
+section {min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:3em; opacity:0; transform: translateY(50px); transition: all 1s ease;}
+section.active {opacity:1; transform: translateY(0);}
+h1 {font-size:3em; margin-bottom:0.5em; text-align:center; color:#0a1d3d;}
+h2 {font-size:1.5em; margin-bottom:1em; text-align:center; color:#0a1d3d;}
+p {max-width:700px; text-align:center; line-height:1.6; margin-bottom:1em; color:#0a1d3d;}
+.section-img {margin-bottom:1em; max-width:300px; border-radius:15px; transition: transform 0.3s; cursor:pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.1);}
+.section-img:hover {transform: scale(1.05);}
+
+/* ----- NAVIGATION ----- */
+nav {position:fixed; top:0; left:0; width:100%; display:flex; justify-content:flex-end; padding:1em 2em; background: rgba(255,255,255,0.85); backdrop-filter: blur(10px); z-index:1000;}
+.nav-links {display:flex; gap:2em;}
+.nav-links a {font-weight:bold; padding:0.5em 1em; border-radius:8px; transition:0.3s; color:#0a1d3d;}
+.nav-links a:hover {background: linear-gradient(90deg, #9ecfff, #f0f4f8); color:#0a1d3d;}
+.hamburger {display:none; flex-direction:column; cursor:pointer;}
+.hamburger div {width:25px; height:3px; background:#0a1d3d; margin:4px 0; transition:0.3s;}
+.mobile-nav {display:none; flex-direction:column; gap:1em; background:#f0f4f8; position:fixed; top:0; right:0; width:220px; height:100vh; padding:4em 1em; box-shadow:-2px 0 15px rgba(0,0,0,0.2); z-index:999;}
+
+/* ----- BUTTONS ----- */
+.btn {padding:0.7em 2em; border:none; border-radius:25px; background: linear-gradient(90deg, #89c2f2, #f0f4f8); color:#0a1d3d; font-weight:bold; cursor:pointer; transition:0.3s;}
+.btn:hover {background: linear-gradient(90deg, #f0f4f8, #89c2f2); transform: scale(1.05);}
+
+/* ----- SECTION BACKGROUNDS ----- */
+#welcome {background: linear-gradient(120deg, #89c2f2, #f0f4f8);}
+#about {background: linear-gradient(120deg, #b6d0ff, #f0f4f8);}
+#education {background: linear-gradient(120deg, #89c2f2, #f0f4f8);}
+#experience {background: linear-gradient(120deg, #b6d0ff, #f0f4f8);}
+#skills {background: linear-gradient(120deg, #89c2f2, #f0f4f8);}
+#project {background: linear-gradient(120deg, #b6d0ff, #f0f4f8);}
+#certifications {background: linear-gradient(120deg, #89c2f2, #f0f4f8);}
+#achievements {background: linear-gradient(120deg, #b6d0ff, #f0f4f8);}
+#additional {background: linear-gradient(120deg, #89c2f2, #f0f4f8);}
+#contact {background: linear-gradient(120deg, #b6d0ff, #f0f4f8);}
+
+/* ----- ENTRY DIVS ----- */
+.entry {background:#ffffffaa; border-radius:15px; padding:1em 1.5em; margin:1em; max-width:500px; text-align:center; transition: box-shadow 0.3s, transform 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.1);}
+.entry:hover {box-shadow: 0 10px 25px rgba(0,0,0,0.3); transform: translateY(-5px);}
+
+/* ----- LEFT ALIGN FOR SECTIONS ----- */
+section:not(#welcome) {
+  justify-content:flex-start;
+  align-items:flex-start;
+  text-align:left;
+  padding:6em 12% 4em;
+  min-height:100vh;
+}
+
+section:not(#welcome) .entry,
+section:not(#welcome) h1,
+section:not(#welcome) h2,
+section:not(#welcome) p {
+  text-align:left;
+  margin-left:0;
+  margin-right:auto;
+}
+
+/* ----- IMAGE + CONTENT LAYOUTS ----- */
+.education-container,
+.skills-container,
+.additional-container,
+.achievements-container {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:3em;
+}
+/* ----- COMMON SIDE IMAGE FIX ----- */
+.side-img {
+  position: absolute;
+  right: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 420px;
+  height: auto;
+  border-radius: 15px;
+  object-fit: cover;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+
+.side-img:hover {
+  transform: translateY(-50%) scale(1.05);
+}
+
+/* Each section becomes relatively positioned so image aligns correctly */
+#education, #skills, #achievements, #additional {
+  position: relative;
+}
+
+/* On smaller screens (tablet & mobile) stack image below text */
+@media (max-width: 1024px) {
+  .side-img {
+    position: static;
+    transform: none;
+    width: 80%;
+    margin-top: 2em;
+  }
+}
+/* ----- COMMON SIDE IMAGE (LEFT VERSION) ----- */
+.side-right-img {
+  position: absolute;
+  left: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 420px;
+  height: auto;
+  border-radius: 15px;
+  object-fit: cover;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+
+.side-right-img:hover {
+  transform: translateY(-50%) scale(1.05);
+}
+
+/* Make sections relatively positioned so image aligns properly */
+#education, #skills, #achievements, #additional {
+  position: relative;
+}
+
+/* On smaller screens stack below text */
+@media (max-width: 1024px) {
+  .side-right-img {
+    position: static;
+    transform: none;
+    width: 80%;
+    margin-top: 2em;
+  }
+}
+
+
+/* Skills specific: image left */
+.skills-container { flex-direction:row-reverse; }
+
+/* Achievements specific: image left, content right */
+.achievements-container { flex-direction:row-reverse; }
+
+/* Responsive fix */
+@media (max-width:768px) {
+  .education-container,
+  .skills-container,
+  .additional-container,
+  .achievements-container {
+    flex-direction:column;
+    align-items:center;
+  }
+  section:not(#welcome) {
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:4em 2em;
+  }
+  section:not(#welcome) h1,
+  section:not(#welcome) h2,
+  section:not(#welcome) p,
+  section:not(#welcome) .entry {
+    text-align:center;
+  }
+}
+/* ----- PROJECT SECTION FIX ----- */
+.project-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2em;
+  justify-content: space-between;
+}
+
+.project-container .entry {
+  flex: 1 1 45%;
+  background: #ffffffaa;
+  border-radius: 15px;
+  padding: 1.5em;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s, transform 0.3s;
+  text-align: center;
+}
+
+.project-container .entry:hover {
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  transform: translateY(-5px);
+}
+
+/* Image placed cleanly on top */
+.project-img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 1em;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.project-img:hover {
+  transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .project-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .project-container .entry {
+    flex: 1 1 100%;
+  }
+}
+
+/* ----- COMMON SIDE IMAGE (LEFT VERSION) ----- */
+.side-right-img {
+  position: absolute;
+  left: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 420px;
+  height: auto;
+  border-radius: 15px;
+  object-fit: cover;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+
+.side-right-img:hover {
+  transform: translateY(-50%) scale(1.05);
+}
+
+/* Make sections relatively positioned so image aligns properly */
+#education, #skills, #achievements, #additional {
+  position: relative;
+}
+
+/* On smaller screens stack below text */
+@media (max-width: 1024px) {
+  .side-right-img {
+    position: static;
+    transform: none;
+    width: 80%;
+    margin-top: 2em;
+  }
+}
+
+/* ----- PROJECT SIDE BY SIDE ----- */
+/* .project-container {
+  display:flex;
+  flex-wrap:wrap;
+  gap:2em;
+  justify-content:space-between;
+}
+.project-container .entry { flex:1 1 45%; } */
+
+/* Responsive projects */
+/* @media (max-width:768px) {
+  .project-container { flex-direction:column; align-items:center; }
+  .project-container .entry { flex:1 1 100%; }
+} */
+ #aboutme {text-align:center;}
+
+/* ----- ABOUT FULL WIDTH ----- */
+#about .entry { max-width:100%; width:100%; text-align:center; }
+
+/* ----- SECTION ANIMATION ----- */
+section {opacity:0; transform:translateY(80px); transition:opacity 1s ease, transform 1s ease; will-change:opacity,transform;}
+section.active {opacity:1; transform:translateY(0);}
+section.active .entry, section.active h1, section.active h2, section.active p {animation:fadeSlideIn 0.8s ease forwards;}
+@keyframes fadeSlideIn {from{opacity:0; transform:translateY(40px);} to{opacity:1; transform:translateY(0);}}
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-links">
+    <a href="#welcome">Welcome</a>
+    <a href="#about">About</a>
+    <a href="#education">Education</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#project">Project</a>
+    <a href="#certifications">Certifications</a>
+    <a href="#achievements">Achievements</a>
+    <a href="#additional">Additional Info</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="hamburger" onclick="toggleMobileNav()">
+    <div></div><div></div><div></div>
+  </div>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="#welcome" onclick="toggleMobileNav()">Welcome</a>
+  <a href="#about" onclick="toggleMobileNav()">About</a>
+  <a href="#education" onclick="toggleMobileNav()">Education</a>
+  <a href="#experience" onclick="toggleMobileNav()">Experience</a>
+  <a href="#skills" onclick="toggleMobileNav()">Skills</a>
+  <a href="#project" onclick="toggleMobileNav()">Project</a>
+  <a href="#certifications" onclick="toggleMobileNav()">Certifications</a>
+  <a href="#achievements" onclick="toggleMobileNav()">Achievements</a>
+  <a href="#additional" onclick="toggleMobileNav()">Additional Info</a>
+  <a href="#contact" onclick="toggleMobileNav()">Contact</a>
+</div>
+
+<!-- WELCOME -->
+<section id="welcome">
+  <div class="welcome-content">
+    <h1>BRUNDA C S</h1>
+    <h2>BCA Graduate | Fresher</h2>
+    <h3 id="aboutme">About Me</h3>
+    <div class="entry about-box">
+      <h3>
+        BCA graduate with specialized training in Software Testing and Automation.
+        Eager to begin a career as a Software Development Engineer in Test (SDET),
+        with strong foundational knowledge in Manual Testing and Automation using Java + Selenium.
+      </h3>
+    </div>
+  </div>
+
+  <img src="images/img1.png" alt="Brunda C S" class="welcome-img">
+</section>
+
+<!-- WELCOME -->
+<!-- <section id="welcome">
+  <img src="images/img1.png" alt="Brunda C S" class="section-img">
+  <h1>BRUNDA C S</h1>
+  <h2>BCA Graduate | Fresher</h2>
+  <h3>About Me</h3>
+  <div class="entry about-full">
+    <h3>BCA graduate with specialized training in Software testing and Automation. 
+    Eager to begin a career as Software Development Engineer in Test (SDET), 
+    with strong foundational knowledge in Manual Testing and Automation using Java + Selenium.</h3>
+  </div>
+</section> -->
+
+<!-- ABOUT -->
+<!-- <section id="about">
+  <h1>About Me</h1>
+  <div class="entry about-full">
+    <h3>BCA graduate with specialized training in Software testing and Automation. 
+    Eager to begin a career as Software Development Engineer in Test (SDET), 
+    with strong foundational knowledge in Manual Testing and Automation using Java + Selenium.</h3>
+  </div>
+</section> -->
+
+<!-- EDUCATION -->
+<section id="education">
+  <h1>Education Background</h1>
+  <div class="education-container">
+    <div class="timeline">
+      <div class="timeline-item"><div class="timeline-content"><h2>Bachelor of Computer Applications</h2><p><strong>St. Joseph’s First Grade College</strong> – Mysore, India – <em>2025</em></p><p>Perc: 94.14%</p></div></div>
+      <div class="timeline-item"><div class="timeline-content"><h2>Pre-University College</h2><p><strong>City Composite PU College</strong> – Bangalore, India – <em>2019</em></p><p>Perc: 56%</p></div></div>
+      <div class="timeline-item"><div class="timeline-content"><h2>SSLC</h2><p><strong>Green Park Central School</strong> – Udupi, India – <em>2017</em></p><p>Perc: 63%</p></div></div>
+    </div>
+    <img src="images/img2.png" alt="Education" class="side-img">
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <h1>Experience</h1>
+  <div class="entry"><h2><b>Data Analytics Intern</b></h2><p><i>TechnoTut Solutions LLP | Dec 2024 - Feb 2025</i></p>
+    <p>Completed 90-hour internship focusing on SQL, queries, cleaning datasets, and generating reports.</p>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <h1>Skills</h1>
+  <div class="skills-container">
+    <img src="images/img3.png" alt="Skills" class="side-img">
+    <div class="skills-content">
+      <div class="entry"><b><h3>SQL</h3></b><p>Good knowledge on RDBMS, Joins, Functions, Sub-query, Normalization, DDL, DML, TCL, DCL.</p></div>
+      <div class="entry"><b><h3>Core Java</h3></b><p>Strong foundation in OOPs, Collections, Threads, File Handling, and Java architecture.</p></div>
+      <div class="entry"><b><h3>Manual Testing</h3></b><p>Trained in SDLC, STLC, Agile, Test Case Design, Bug Reporting, and Testing Types.</p></div>
+      <div class="entry"><b><h3>Automation Testing</h3></b><p>Hands-on Selenium with Java for test automation and script execution.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT -->
+<!-- <section id="project">
+  <h1>Projects</h1>
+  <div class="project-container">
+    <div class="entry project-item" data-video="videos/Nrittya.mp4">
+      <img src="images/img5.jpg" alt="Nrittya" class="section-img">
+      <b><h3>Nrittya | 05/2025</h3></b>
+      <p>Developed 35 automated test cases using Selenium for dance form recognition app.</p>
+    </div>
+
+    <div class="entry project-item" data-video="videos/Space.mp4">
+      <img src="images/img4.jpg" alt="Planet Encyclopedia" class="section-img">
+      <b><h3>Planet Encyclopedia | 11/2024</h3></b>
+      <p>Interactive website with solar system animation built using HTML, CSS, JS.</p>
+    </div>
+  </div>
+</section> -->
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <h1>Certifications</h1>
+  <div class="entry"><h3>Data Analytics with MySQL</h3><p>TechnoTut Solutions LLP</p></div>
+  <div class="entry"><h3>Python Basics</h3><p>Great Learning App</p></div>
+</section>
+<!-- PROJECT -->
+<section id="project">
+  <h1>Projects</h1>
+  <div class="project-container">
+    
+    <div class="entry project-item" data-video="videos/Nrittya.mp4">
+      <img src="images/img5.jpg" alt="Nrittya" class="project-img">
+      <b><h3>Nrittya | 05/2025</h3></b>
+      <p>Developed 35 automated test cases using Selenium for dance form recognition app.</p>
+    </div>
+
+    <div class="entry project-item" data-video="videos/Space.mp4">
+      <img src="images/img4.jpg" alt="Planet Encyclopedia" class="project-img">
+      <b><h3>Planet Encyclopedia | 11/2024</h3></b>
+      <p>Interactive website with solar system animation built using HTML, CSS, JS.</p>
+    </div>
+
+  </div>
+</section>
+
+
+<div id="videoOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:2000;">
+  <video id="projectVideo" controls style="max-width:90%; max-height:80%; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.5);"></video>
+</div>
+
+
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <h1>Achievements</h1>
+  <div class="achievements-container">
+    <img src="images/IMG_20251026_023745.png" alt="Achievements" class="side-img">
+    <div class="achievements-content">
+      <div class="entry"><h3>District & State Level Dance Awards</h3></div>
+      <div class="entry"><h3>District & State Level Karate Awards</h3></div>
+      <div class="entry"><h3>Best Paper Presenter Award, Fusion 2025</h3></div>
+      <div class="entry"><h3>Best Outgoing Student, 2025</h3></div>
+    </div>
+  </div>
+</section>
+
+<!-- ADDITIONAL INFO -->
+<!-- <section id="additional">
+  <h1>Additional Information</h1>
+  <div class="additional-container">
+    <div class="additional-content">
+      <div class="entry">Passionate dancer and karate practitioner</div>
+      <div class="entry">Enjoys learning new technologies, personal growth, and creative projects</div>
+    </div>
+    
+  </div>
+</section> -->
+
+<!-- CONTACT -->
+<section id="contact">
+  <h1>Contact Information</h1>
+  <div class="contact-container">
+    <div class="contact-left">
+      
+    </div>
+    <div class="contact-right">
+      <div class="contact-box"><h3>Email</h3><p><a href="mailto:brundashridhar@gmail.com" target="_blank">brundashridhar@gmail.com</a></p></div>
+      <div class="contact-box"><h3>Phone</h3><p><a href="tel:+917760702329">+91 7760702329</a></p></div>
+      <div class="contact-box"><h3>LinkedIn</h3><p><a href="https://linkedin.com/in/brunda-cs29" target="_blank">linkedin.com/in/brunda-cs29</a></p></div>
+      <div class="contact-box"><h3>GitHub</h3><p><a href="https://github.com/Brundacs" target="_blank">github.com/Brundacs</a></p></div>
+      <div class="contact-box"><h3>Location</h3><p>Mysore, India</p></div>
+    </div>
+    <img src="images/img6.png" alt="Additional Info" class="side-right-img">
+  </div>
+</section>
+
+<script>
+// PROJECT VIDEO POPUP
+const projectItems=document.querySelectorAll('.project-item');
+const videoOverlay=document.getElementById('videoOverlay');
+const projectVideo=document.getElementById('projectVideo');
+projectItems.forEach(item=>{item.addEventListener('click',()=>{const videoSrc=item.getAttribute('data-video');projectVideo.src=videoSrc;videoOverlay.style.display='flex';projectVideo.play();});});
+videoOverlay.addEventListener('click',(e)=>{if(e.target===videoOverlay){projectVideo.pause();projectVideo.src='';videoOverlay.style.display='none';}});
+
+// SCROLL ANIMATION
+const observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('active');}else{entry.target.classList.remove('active');}});},{threshold:0.3});
+document.querySelectorAll('section').forEach(section=>{observer.observe(section);});
+
+// MOBILE NAV
+function toggleMobileNav(){const nav=document.getElementById('mobileNav');nav.style.display=nav.style.display==='flex'?'none':'flex';}
+</script>
+</body>
+</html>
